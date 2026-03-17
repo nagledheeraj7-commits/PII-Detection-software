@@ -1,0 +1,21 @@
+name,email,phone,address,aadhaar,pan,age,company,notes
+John Smith,john.smith@gmail.com,+1-555-123-4567,123 Main St, New York, NY 10001,,,32,Tech Corp,Regular employee
+Jane Doe,jane.doe@yahoo.com,555-987-6543,456 Oak Ave, Los Angeles, CA 90001,234567890123,ABCDE1234F,28,Startup Inc,Manager
+Robert Johnson,robert.j@outlook.com,(555) 234-5678,789 Pine Rd, Chicago, IL 60007,,,45,Enterprise Co,Senior developer
+Maria Garcia,maria.g@hotmail.com,555-345-6789,321 Elm St, Houston, TX 77001,345678912345,FGHIJ5678K,31,Mega Corp,Team lead
+David Lee,david.lee@gmail.com,+91 98765 43210,456 Maple Dr, San Francisco, CA 94102,,,29,Tech Solutions,Engineer
+Sarah Wilson,sarah.w@email.com,9876543210,789 Cedar Ln, Boston, MA 02108,456789012345,KLMNO3456P,35,Innovation Labs,Product manager
+Michael Brown,michael.b@company.com,022-23456789,123 Birch Way, Seattle, WA 98101,,,40,Software House,CTO
+Lisa Anderson,lisa.a@domain.org,+91 87654 32109,657 Spruce St, Denver, CO 80202,567890123456,PQRST6789Q,27,Digital Agency,Designer
+James Taylor,james.taylor@email.net,8765432109,890 Willow Ave, Portland, OR 97201,,,38,Cloud Systems,Architect
+Jennifer Davis,jen.davis@web.com,011-23456789,234 Aspen Blvd, Austin, TX 78701,678901234567,UVWXY8901R,33,Data Analytics,Analyst
+William Martinez,william.m@tech.io,7654321098,345 Redwood St, Phoenix, AZ 85001,789012345678,STUZA2345S,42,DevOps Inc,DevOps engineer
+Patricia Rodriguez,patricia.r@info.co,+1-555-888-9999,567 Sequoia Dr, Philadelphia, PA 19101,,,29,Consulting Group,Consultant
+Christopher Hernandez,chris.h@business.com,6543210987,901 Cypress Ave, San Diego, CA 92101,890123456789,ABCDE2345T,36,Marketing Pro,Marketing manager
+Linda Thompson,linda.t@service.net,5432109876,123 Juniper Ln, Dallas, TX 75201,,,31,Sales Force,Sales representative
+Daniel White,daniel.w@platform.org,+91 76543 21098,234 Pineapple St, San Jose, CA 95101,901234567890,FGHIJ3456U,39,Platform Tech,Backend developer
+Barbara Harris,barbara.h@startup.io,4321098765,678 Mango Ave, Detroit, MI 48201,,,26,Startup Hub,Frontend developer
+Richard Clark,richard.c@enterprise.com,3210987654,890 Orange Blvd, Minneapolis, MN 55401,012345678901,KLMNO4567V,44,Enterprise Solutions,Solutions architect
+Susan Lewis,susan.l@systems.net,2109876543,456 Grapefruit St, Tampa, FL 33601,,,34,Systems Integration,System engineer
+Joseph Robinson,joe.r@tech.co,1098765432,789 Lemon Way, Atlanta, GA 30301,123456789012,PQRST5678W,30,Tech Innovations,Innovation lead
+Karen Walker,karen.w@digital.org,0987654321,123 Peach Dr, Charlotte, NC 28201,,,48,Digital Transform,Director
