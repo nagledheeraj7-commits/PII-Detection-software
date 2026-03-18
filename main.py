@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
+<<<<<<< HEAD
 PII Detection Main Script - Production Version
+=======
+PII Detection Main Script - Clean Working Version
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
 """
 
 import sys
@@ -11,6 +15,7 @@ import pandas as pd
 import json
 from pathlib import Path
 from typing import Dict, List, Any, Optional
+<<<<<<< HEAD
 from contextlib import contextmanager
 
 # Import production components
@@ -22,6 +27,8 @@ from monitoring import monitor_operation, metrics_collector, resource_manager, r
 # Setup logging at import time
 setup_logging()
 logger = get_logger("Main")
+=======
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
 
 # Setup safe encoding first
 try:
@@ -78,6 +85,7 @@ def parse_arguments():
     return input_file, output_file, sample_size, no_gliner
 
 def safe_string(value) -> str:
+<<<<<<< HEAD
     """Convert any value to a safe string for analysis - CRITICAL FIX"""
     if value is None:
         return ""
@@ -107,11 +115,34 @@ class SimplePIIDetector:
     """Production-ready PII detector using Presidio and optional GLiNER"""
     
     def __init__(self, use_gliner=True, use_presidio=True):
+=======
+    """Convert any value to a safe string for analysis"""
+    if value is None:
+        return ""
+    
+    if isinstance(value, dict):
+        return " ".join(str(v) for v in value.values() if v is not None)
+    
+    if isinstance(value, list):
+        return " ".join(str(v) for v in value if v is not None)
+    
+    # Handle pandas NaN/NaT values
+    if pd.isna(value):
+        return ""
+    
+    return str(value).strip()
+
+class SimplePIIDetector:
+    """Simple PII detector using Presidio and optional GLiNER"""
+    
+    def __init__(self, use_gliner=True):
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
         self.presidio_engine = None
         self.gliner_engine = None
         self.engines_used = []
         
         # Initialize Presidio
+<<<<<<< HEAD
         if use_presidio and config.enable_presidio:
             try:
                 from presidio_analyzer import AnalyzerEngine
@@ -125,6 +156,18 @@ class SimplePIIDetector:
         
         # Initialize GLiNER if requested
         if use_gliner and config.enable_gliner:
+=======
+        try:
+            from presidio_analyzer import AnalyzerEngine
+            self.presidio_engine = AnalyzerEngine()
+            self.engines_used.append("presidio")
+            safe_print("Presidio engine initialized successfully")
+        except Exception as e:
+            safe_print(f"Error initializing Presidio: {e}")
+        
+        # Initialize GLiNER if requested
+        if use_gliner:
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
             try:
                 from pii_detector.gliner_engine_fixed import GLiNERPIIEngine
                 self.gliner_engine = GLiNERPIIEngine()
@@ -133,6 +176,7 @@ class SimplePIIDetector:
                 if status["model_loaded"] or status["using_fallback"]:
                     self.engines_used.append("gliner")
                     if status["model_loaded"]:
+<<<<<<< HEAD
                         logger.info("GLiNER engine initialized successfully")
                     else:
                         logger.info("GLiNER using rule-based fallback")
@@ -143,6 +187,18 @@ class SimplePIIDetector:
                 logger.warning("Continuing with available engines")
         
         logger.info(f"Active engines: {', '.join(self.engines_used)}")
+=======
+                        safe_print("GLiNER engine initialized successfully")
+                    else:
+                        safe_print("GLiNER using rule-based fallback")
+                else:
+                    safe_print("GLiNER engine failed to load - using Presidio only")
+            except Exception as e:
+                safe_print(f"Error initializing GLiNER: {e}")
+                safe_print("Continuing with Presidio only")
+        
+        safe_print(f"Active engines: {', '.join(self.engines_used)}")
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
     
     def analyze_text(self, text: str) -> List[Dict[str, Any]]:
         """Analyze text for PII"""
@@ -161,14 +217,21 @@ class SimplePIIDetector:
                     language="en"
                 )
                 for result in results:
+<<<<<<< HEAD
                     # Safe confidence comparison - CRITICAL FIX
                     confidence = result.score if result.score is not None else 0.0
+=======
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
                     entities.append({
                         "type": result.entity_type,
                         "start": result.start,
                         "end": result.end,
                         "value": text[result.start:result.end],
+<<<<<<< HEAD
                         "confidence": confidence,
+=======
+                        "confidence": result.score,
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
                         "source": "presidio"
                     })
             except Exception as e:
@@ -180,16 +243,23 @@ class SimplePIIDetector:
             try:
                 gliner_results = self.gliner_engine.analyze_text(text)
                 for result in gliner_results:
+<<<<<<< HEAD
                     # Safe confidence comparison - CRITICAL FIX
                     confidence = result.get("confidence")
                     if confidence is None:
                         confidence = 0.0
+=======
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
                     entities.append({
                         "type": result["label"].upper(),
                         "start": result["start"],
                         "end": result["end"],
                         "value": result["text"],
+<<<<<<< HEAD
                         "confidence": confidence,
+=======
+                        "confidence": result["confidence"],
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
                         "source": "gliner"
                     })
             except Exception as e:
@@ -198,6 +268,7 @@ class SimplePIIDetector:
         return entities
     
     def analyze_csv(self, input_file: str, sample_size: Optional[int] = None) -> Dict[str, Any]:
+<<<<<<< HEAD
         """Analyze CSV file for PII with production safety"""
         logger.info(f"Loading CSV file: {input_file}")
         
@@ -415,6 +486,86 @@ def run_pii_detection(file_path: str, use_gliner: bool = True, sample_size: Opti
     except Exception as e:
         logger.error("PII detection failed", exception=e, file_path=file_path)
         raise Exception(f"PII detection failed: {str(e)}")
+=======
+        """Analyze CSV file for PII"""
+        safe_print(f"Loading CSV file: {input_file}")
+        
+        try:
+            # Load CSV
+            df = pd.read_csv(input_file, encoding='utf-8')
+            safe_print(f"Successfully loaded CSV with {len(df)} rows and {len(df.columns)} columns")
+        except UnicodeDecodeError:
+            try:
+                df = pd.read_csv(input_file, encoding='latin-1')
+                safe_print("Successfully loaded CSV with latin-1 encoding")
+            except Exception as e:
+                safe_print(f"Error loading CSV: {e}")
+                return {}
+        except Exception as e:
+            safe_print(f"Error loading CSV: {e}")
+            return {}
+        
+        # Sample data if requested
+        if sample_size and len(df) > sample_size:
+            df = df.sample(n=sample_size, random_state=42)
+            safe_print(f"Sampled {sample_size} rows")
+        
+        # Analyze each cell
+        all_entities = []
+        column_results = {}
+        
+        for column_name in df.columns:
+            safe_print(f"Analyzing column: {column_name}")
+            
+            column_entities = []
+            pii_cells = 0
+            
+            for idx, value in enumerate(df[column_name]):
+                # Skip NaN values
+                if pd.isna(value):
+                    continue
+                
+                entities = self.analyze_text(str(value))
+                
+                if entities:
+                    pii_cells += 1
+                    for entity in entities:
+                        entity.update({
+                            "row_number": idx + 1,
+                            "column_name": column_name,
+                            "original_value": str(value)
+                        })
+                        column_entities.append(entity)
+                        all_entities.append(entity)
+            
+            column_results[column_name] = {
+                "total_cells": len(df[column_name].dropna()),
+                "pii_cells": pii_cells,
+                "pii_percentage": (pii_cells / len(df[column_name].dropna())) * 100 if len(df[column_name].dropna()) > 0 else 0,
+                "entities": column_entities
+            }
+        
+        # Create result
+        result = {
+            "metadata": {
+                "input_file": input_file,
+                "total_rows": len(df),
+                "total_columns": len(df.columns),
+                "engines_used": self.engines_used,
+                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
+            },
+            "summary": {
+                "total_cells": len(df) * len(df.columns),
+                "total_pii_cells": sum(result["pii_cells"] for result in column_results.values()),
+                "total_entities_found": len(all_entities),
+                "overall_pii_percentage": (sum(result["pii_cells"] for result in column_results.values()) / (len(df) * len(df.columns))) * 100 if len(df) * len(df.columns) > 0 else 0
+            },
+            "column_results": column_results,
+            "all_entities": all_entities
+        }
+        
+        return result
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
 
 def main():
     """Main function"""
@@ -432,8 +583,28 @@ def main():
         safe_print("PII Detection Tool")
         safe_print("=" * 50)
         
+<<<<<<< HEAD
         # Use the reusable function
         result = run_pii_detection(input_file, use_gliner=not no_gliner, sample_size=sample_size)
+=======
+        # Initialize detector
+        detector = SimplePIIDetector(use_gliner=not no_gliner)
+        
+        if not detector.engines_used:
+            safe_print("Error: No engines available")
+            return
+        
+        # Analyze CSV
+        start_time = time.time()
+        result = detector.analyze_csv(input_file, sample_size)
+        processing_time = time.time() - start_time
+        
+        if not result:
+            safe_print("Error: Analysis failed")
+            return
+        
+        result["processing_time"] = processing_time
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
         
         # Create output directory
         output_path = Path(output_file)
@@ -450,7 +621,11 @@ def main():
         safe_print("PII DETECTION REPORT SUMMARY")
         safe_print("=" * 50)
         safe_print(f"Input File: {input_file}")
+<<<<<<< HEAD
         safe_print(f"Processing Time: {result['processing_time']:.2f} seconds")
+=======
+        safe_print(f"Processing Time: {processing_time:.2f} seconds")
+>>>>>>> e9dfd611ba2d0e633a07f1d79609d174e7f631f8
         safe_print(f"Engines Used: {', '.join(result['metadata']['engines_used'])}")
         safe_print(f"Total Rows: {result['metadata']['total_rows']}")
         safe_print(f"Total Columns: {result['metadata']['total_columns']}")
